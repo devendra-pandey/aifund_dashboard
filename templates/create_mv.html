@@ -1,0 +1,42 @@
+{% extends 'header.html' %} {% block content %}
+
+<div class="container">
+    <h3>Create Model Version</h3>
+
+    <form method="POST" action="/createmv">
+        <label for="name">Select Model:</label>
+        <select name="model" id="model">
+        {% for modelmv in model %}
+        <option value="{{ modelmv.id }}">{{ modelmv.name }}</option>
+        {% endfor %}
+        </select>
+        <label for="name">Version:</label>
+        <input
+        type="number"
+        class="form-control"
+        id="version"
+        name="version"
+        placeholder="version"
+        step="0.1"
+        required
+        />
+        <div class="col-sm-13">
+        {% with errors = get_flashed_messages(category_filter=["danger"]) %} {% if
+        errors %} {%- for message in errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span>{{ message }}</span>
+        </div>
+        {% endfor -%} {% endif %} {% endwith %}
+        </div>
+        <div class="col-sm-13">
+        {% with errors = get_flashed_messages(category_filter=["success"]) %} {%
+        if errors %} {%- for message in errors %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span>{{ message }}</span>
+        </div>
+        {% endfor -%} {% endif %} {% endwith %}
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+{% endblock %}

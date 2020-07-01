@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <link
+      href="{{ url_for('static', filename='css/globle.css') }}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+  </script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .topnav {
+        overflow: hidden;
+        background-color: #333;
+      }
+
+      .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      .topnav a.active {
+        background-color: rgb(111, 76, 175);
+        color: white;
+      }
+
+      .hide {
+        display: none;
+      }
+    </style>
+
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+
+      input[type="text"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      .container {
+        border-radius: 5px;
+
+        padding: 50px;
+      }
+    </style>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      /* Create two equal columns that floats next to each other */
+      .column {
+        float: left;
+        width: 10%;
+        padding: 10px;
+        height: 300px; /* Should be removed. Only for demonstration */
+      }
+      .column1 {
+        float: left;
+        width: 10%;
+        padding: 10px;
+        height: 300px; /* Should be removed. Only for demonstration */
+      }
+
+      /* Clear floats after the columns */
+      .row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+    </style>
+  </head>
+  <body id="work">
+    <div class="topnav">
+      {% if current_user.is_authenticated %}
+      <a class="" href="/dashboard" id="home">Home</a>
+      <a class="" href="/createprofile" id="cp">Create Profile</a>
+      <a class="" href="/createmodel" id="cm">Create Model</a>
+      <a class="" href="/createmv" id="cmv">Create Model Version</a>
+      <a class="" href="/logout" onclick="logout" id="logout">Logout</a>
+      {% else %}
+      <a class="" href="/signup" id="Signup">Register</a>
+      <a class="" href="/" id="login">Login</a>
+      {% endif %}
+    </div>
+
+    
+      
+      
+  {% block content %} {% endblock %}
+    </div>
+  </body>
+</html>

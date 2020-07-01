@@ -1,0 +1,39 @@
+{% extends 'header.html' %} 
+
+{% block content %}
+<body>
+    <div class="container">
+  <h3>Create Model</h3>
+  <form method="POST" action='/createmodel'>
+    <label for="name"> Model Name :</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="name" required>
+    <label for="name">Description:</label>
+    <input type="text" class="form-control" id="description" name="description" placeholder="Description" required>
+    <div class="col-sm-13">
+      {% with errors = get_flashed_messages(category_filter=["danger"]) %}
+          {% if errors %}
+              {%- for message in errors %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <span>{{ message }}</span>
+                  </div>
+              {% endfor -%}
+          {% endif %}
+      {% endwith %}
+  </div>
+  <div class="col-sm-13">
+    {% with errors = get_flashed_messages(category_filter=["success"]) %}
+        {% if errors %}
+            {%- for message in errors %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor -%}
+        {% endif %}
+    {% endwith %}
+</div>
+    <button type="submit" class="btn btn-success">Submit</button>
+    
+  </form>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'header.html' %} {% block content %}
+
+  <div class="container">
+  <h3>Create Profile</h3>
+  <form method="POST" action='/createprofile' enctype="multipart/form-data" >
+    <label for="name">Select Model:</label>
+    <select name="model_id" id="model_id">
+      <option>---Please Select The Model</option>
+      {% for modelmv in model %}
+      <option value="{{ modelmv.id }}">{{ modelmv.name }}</option>
+      {% endfor %}
+    </select>
+    <label for="name">Select Model Version:</label>
+    <select name="modelversion_id" id="modelversion_id">
+      
+      <option value=""></option>
+      
+    </select>
+    <label for="name">Select Date:</label>
+    <input type="Date" class="form-control" id="report_date" name="report_date" placeholder="Choose the Date" required>
+
+    <label for="name">Upload the CSV file:</label>
+    <input type="file" class="form-control" id="file_path" name="file_path" value="Choose file" required>
+    <div class="col-sm-13">
+      {% with errors = get_flashed_messages(category_filter=["danger"]) %}
+          {% if errors %}
+              {%- for message in errors %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <span>{{ message }}</span>
+                  </div>
+              {% endfor -%}
+          {% endif %}
+      {% endwith %}
+  </div>
+  <div class="col-sm-13">
+    {% with errors = get_flashed_messages(category_filter=["success"]) %}
+        {% if errors %}
+            {%- for message in errors %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor -%}
+        {% endif %}
+    {% endwith %}
+</div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+  {% if stock %} 
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Code</th>
+        <th scope="col">BSE_Scrip_Name</th>
+        <th scope="col">model_decision</th>
+        <th scope="col">instrument_token</th>
+        <th scope="col">stop_loss</th>
+        <th scope="col">stop_gain</th>
+        <th scope="col">trigger</th>
+        <th scope="col">Previous_Close</th>
+        <th scope="col">Today_Open</th>
+        <th scope="col">Today_Close</th>
+        <th scope="col">delta_previous_today</th>
+        <th scope="col">actual_delta</th>
+        <th scope="col">return_generated</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Quantity_adjusted</th>
+        <th scope="col">total_return</th>
+        <th scope="col">transaction_value</th>
+        <th scope="col">new_transaction_value</th>
+        <th scope="col">traditional_brokerage</th>
+        <th scope="col">zerodha_brokerage</th>
+        <th scope="col">hybrid_brokerage</th>
+        <th scope="col">total_return_after_traditional_brokerage</th>
+        <th scope="col">total_return_after_zerodha_brokerage</th>
+        <th scope="col">total_return_after_hybrid_brokerage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for st in stock %}
+      <tr>
+        <th scope="row">{{ st.code }}</th>
+        <td>{{st.name}}</td>
+        <td>{{ st.model_decision}}</td>
+        <td>{{ st.instrument_token}}</td>
+        <td> {{ st.stop_loss }}</td>
+        <td> {{ st.stop_gain }}</td>
+        <td>{{ st.triggered }}</td>
+        <td>{{ st.previous_close }}</td>
+        <td>{{ st.today_open }}</td>
+        <td>{{ st.today_close }}</td>
+        <td> {{ st.delta_previous_today }} </td>
+        <td>{{ st.actual_delta }}</td>
+        <td>{{ st.return_generated }}</td>
+        <td>{{ st.quantity }}</td>
+        <td>{{ st.quantity_adjusted }}</td>
+        <td>{{ st.total_return }}</td>
+        <td>{{ st.transaction_value }}</td>
+        <td>{{ st.new_transaction_value }}</td>
+        <td>{{ st.traditional_brokerage }}</td>
+        <td>{{ st.zerodha_brokerage }}</td>
+        <td>{{ st.hybrid_brokerage }}</td>
+        <td>{{ st.tra_traditional_brokerage }}</td>
+        <td>{{ st.tra_zerodha_brokerage }}</td>
+        <td>{{ st.tra_hybrid_brokerage }}</td>
+
+      </tr>
+      {% endfor %}
+      
+    </tbody>
+  </table>
+{% else %}
+<h3> No Data Present </h3>
+{% endif %}
+
+<script>
+  $(document).ready(function() {
+    $('#model_id').change(function() {
+
+      var model12 = $('#model_id').val();
+            $.ajax({
+                url: `http://127.0.0.1:5000/dropdown/${model12}`,
+                type: "GET",
+                contentType: "application/json",
+                data: JSON.stringify({ "msg": "Model Check on the console" }),
+                success: function (data) {
+                    var options = "";
+                    for (item of data.list_of_version) {
+                      options = options + `<option value="${item.id}"> ${item.version}  </option>`
+                    }
+                    $("#modelversion_id").html(options)
+                            }
+            })
+        }
+      );
+    });
+ 
+</script>
+
+{% endblock %}
